@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
     // saving the comment to the users collection
     Comments.save()
         .then(comment => {
-            res.status(201).json({ data: user })
+            res.status(201).json({ data: comment })
         })
         .catch(err => {
             res.status(500).json({ error: err })
@@ -62,7 +62,7 @@ router.put('/:_id', (req, res) => {
 
     Comments.findByIdAndUpdate(_id, req.body)
         .then(updatedComment => {
-            res.status(204).json({ data: updatedComments });
+            res.status(204).json({ data: updatedComment });
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -72,10 +72,10 @@ router.put('/:_id', (req, res) => {
 // ======================== DELETE Requests ========================
 
 // delete user comment
-router.delete('/:_body', (req, res) => {
-    const { body } = req.params;
+router.delete('/:_id', (req, res) => {
+    const { id } = req.params;
 
-    Comments.findByIdAndRemove(body)
+    Comments.findByIdAndRemove(id)
         .then(deletedComment => {
             res.status(204).json({ data: { message: `Comment deleted successfully.`, deletedComment } });
         })
