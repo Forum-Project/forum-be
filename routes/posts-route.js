@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
         post_comments: req.body.post_title,
         post_category: req.body.post_title,
         // // where do you come from
-        // user_id: req.body.user_id
+        user_id: req.body.user_id
     });
 
     // saving the post to the Posts collection
