@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const postsSchema = new mongoose.Schema({
-    post_title: Number,
-    post_body: Number,
-    post_date: Number,
-    post_comments: Number,
-    post_category: Number,
+    post_title: String,
+    post_body: String,
+    post_date: String,
+    post_comments: String,
+    post_category: String,
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
 
 })
