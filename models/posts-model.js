@@ -7,7 +7,6 @@ const postsSchema = new mongoose.Schema({
     post_comments: String,
     post_category: String,
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
-
 })
 
 const Posts = new mongoose.model('Posts', postsSchema);
