@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -8,8 +8,10 @@ const userSchema = new mongoose.Schema({
     user_posts: { type: mongoose.Schema.Types.ObjectId, ref: 'Posts' },
     user_comments: { type: mongoose.Schema.Types.ObjectId, ref: 'Comments' },
     user_permission: { type: Number, default: 1 },
+
+
 })
 
-const Users = new mongoose.model('Users', userSchema); 
+const Users = new mongoose.model('Users', userSchema);
 
 module.exports = Users; 
