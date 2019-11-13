@@ -1,8 +1,10 @@
 // library imports
 // a 1 liner short cut for creating a router with express
 const router = require('express').Router();
+const bcrypt = require('bcryptjs') // Bcryptjs is better for us to use because it is available in more places than bcrypt which is native to C++
 
 // middlware imports
+const generateToken = require('../middleware/generateToken')
 
 // model imports 
 const Users = require('../models/users-model');
@@ -40,12 +42,11 @@ router.get('/:_id', (req, res) => {
 
 // add a user
 router.post('/', (req, res) => {
-    const user = new Users({
-        //body structure for created user
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    });
+    let temp = req.body;
+    const hash = bcrypt.hashSync(user.password, 12)
+    temp.password = hash;
+
+    const user = new Users(temp);
 
     // saving the user to the users collection
     user.save()
@@ -57,6 +58,43 @@ router.post('/', (req, res) => {
         });
 });
 
+
+//Login
+router.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    user.findOne({ email: email })
+        .then(user => {
+            //If the password matches after going through the hash continue
+            if (user && bcrypt.compareSync(password, user.password)) {
+                // Create a token
+                const token = generateToken(user)
+
+                res.status(200).json({ message: 'Welcome', token });
+            }
+            else {
+                error('Wrong Information', 401, res)
+            }
+        })
+        .catch(err => {
+            error(err, 500, res)
+        })
+})
+
+//Logout
+router.get('/logout', (req, res) => {
+    //Check for a current session in progress and then end it with a destroy method
+    if (req.session) {
+        //Destroy session by setting it to null
+        req.session.destroy
+        //End the response to close
+        res.send('Otsukare Sama Desu!')
+    }
+    //If a session doesn't exist notify the user to login
+    else {
+        res.send('Gomen!*Smoke Bomb*')
+    }
+})
 // ======================== PUT Requests ===========================
 
 // update specific user information 
