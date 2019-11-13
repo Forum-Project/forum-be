@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs') // Bcryptjs is better for us to use because i
 
 // middlware imports
 const generateToken = require('../middleware/generateToken')
+const mw = require('../middleware/users-middleware')
 
 // model imports 
 const Users = require('../models/users-model');
@@ -43,9 +44,9 @@ router.get('/:_id', (req, res) => {
 // add a user
 router.post('/', (req, res) => {
     let temp = req.body;
-    const hash = bcrypt.hashSync(user.password, 12)
+    const hash = bcrypt.hashSync(temp.password, 12)
     temp.password = hash;
-
+    console.log(temp.password)
     const user = new Users(temp);
 
     // saving the user to the users collection
@@ -58,18 +59,17 @@ router.post('/', (req, res) => {
         });
 });
 
-
 //Login
 router.post('/login', (req, res) => {
-    const { email, password } = req.body;
-
-    user.findOne({ email: email })
+    const { username, password } = req.body;
+    console.log('Username:', { username: username })
+    Users
+        .findOne({ username: username })
         .then(user => {
             //If the password matches after going through the hash continue
             if (user && bcrypt.compareSync(password, user.password)) {
                 // Create a token
                 const token = generateToken(user)
-
                 res.status(200).json({ message: 'Welcome', token });
             }
             else {
@@ -77,7 +77,7 @@ router.post('/login', (req, res) => {
             }
         })
         .catch(err => {
-            error(err, 500, res)
+            res.status(501).json({ message: 'It Went to the Catch', err })
         })
 })
 
@@ -95,6 +95,7 @@ router.get('/logout', (req, res) => {
         res.send('Gomen!*Smoke Bomb*')
     }
 })
+
 // ======================== PUT Requests ===========================
 
 // update specific user information 
