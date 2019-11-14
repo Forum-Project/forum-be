@@ -38,14 +38,17 @@ router.get('/:_id', (req, res) => {
 
 // add a comment
 router.post('/', (req, res) => {
-    const Comments = new Comments({
+    const comments = new Comments({
         //body structure for created user
-        comments: req.body.comments,
+        comments_body: req.body.comments_body,
+        comments_timestamp: req.body.comments_timestamp,
+        user_id: req.body.user_id,
+        post_id: req.body.post_id
 
     });
 
     // saving the comment to the users collection
-    Comments.save()
+    comments.save()
         .then(comment => {
             res.status(201).json({ data: comment })
         })
