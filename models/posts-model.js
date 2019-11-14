@@ -4,8 +4,8 @@ const postsSchema = new mongoose.Schema({
     post_title: String,
     post_body: String,
     post_date: String,
-    post_comments: String,
-    post_category: String,
+    post_tags: Array,
+    post_category: { type: mongoose.Schema.Types.ObjectId, ref: 'Categories' },
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
 })
 

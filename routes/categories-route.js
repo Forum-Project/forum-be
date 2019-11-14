@@ -2,6 +2,7 @@
 const router = require('express').Router();
 
 const Categories = require('../models/categories-model');
+const Posts = require('../models/posts-model');
 
 router.get('/', (req, res) => {
 
@@ -60,6 +61,22 @@ router.delete('/:_id', (req, res) => {
     Categories.findByIdAndRemove(_id)
         .then(deletedCategory => {
             res.status(204).json({ data: { message: `Category deleted successfully.`, deletedCategory } });
+        })
+        .catch(err => {
+            res.status(500).json({ error: err });
+        });
+});
+
+
+
+// How to grab a Post by Category
+// get post by id
+router.get('/:id/posts', (req, res) => {
+    const { id } = req.params;
+
+    Posts.find({ post_category: id })
+        .then(docs => {
+            res.status(200).json({ data: docs });
         })
         .catch(err => {
             res.status(500).json({ error: err });
