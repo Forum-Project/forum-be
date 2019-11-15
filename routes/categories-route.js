@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
 
     Categories.find()
         .then(docs => {
+            console.log(docs)
             res.status(200).json({ data: docs });
         })
         .catch(err => {
