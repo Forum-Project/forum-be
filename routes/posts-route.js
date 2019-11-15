@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
     Posts.find()
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -29,7 +29,7 @@ router.get('/:_id', (req, res) => {
 
     Posts.findById(_id)
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -54,7 +54,7 @@ router.post('/', (req, res) => {
     // saving the post to the Posts collection
     post.save()
         .then(post => {
-            res.status(201).json({ data: post })
+            res.status(201).json(post)
         })
         .catch(err => {
             res.status(500).json({ error: err })
@@ -69,7 +69,7 @@ router.put('/:_id', (req, res) => {
 
     Posts.findByIdAndUpdate(_id, req.body)
         .then(updatedPost => {
-            res.status(204).json({ data: updatedPost });
+            res.status(204).json(updatedPost);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -84,7 +84,7 @@ router.delete('/:_id', (req, res) => {
 
     Posts.findByIdAndRemove(_id)
         .then(deletedPost => {
-            res.status(204).json({ data: { message: `Post deleted successfully.`, deletedPost } });
+            res.status(204).json({ message: `Post deleted successfully.`, deletedPost });
         })
         .catch(err => {
             res.status(500).json({ error: err });

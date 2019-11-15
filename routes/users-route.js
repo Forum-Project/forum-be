@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
     Users.find()
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -32,7 +32,7 @@ router.get('/:_id', (req, res) => {
 
     Users.findById(_id)
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
     // saving the user to the users collection
     user.save()
         .then(user => {
-            res.status(201).json({ data: user })
+            res.status(201).json(user)
         })
         .catch(err => {
             res.status(500).json({ error: `${err}` })
@@ -104,7 +104,7 @@ router.put('/:_id', (req, res) => {
 
     Users.findByIdAndUpdate(_id, req.body)
         .then(updatedUser => {
-            res.status(204).json({ data: updatedUser });
+            res.status(204).json(updatedUser);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -119,7 +119,7 @@ router.delete('/:_id', (req, res) => {
 
     Users.findByIdAndRemove(_id)
         .then(deletedUser => {
-            res.status(204).json({ data: { message: `User deleted successfully.`, deletedUser } });
+            res.status(204).json({ message: `User deleted successfully.`, deletedUser });
         })
         .catch(err => {
             res.status(500).json({ error: err });
