@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 
     Categories.find()
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -20,7 +20,7 @@ router.get('/:_id', (req, res) => {
 
     Categories.findById(_id)
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
     // saving the user to the Categories collection
     categories.save()
         .then(user => {
-            res.status(201).json({ data: user })
+            res.status(201).json(user)
         })
         .catch(err => {
             res.status(500).json({ error: err })
@@ -48,7 +48,7 @@ router.put('/:_id', (req, res) => {
 
     Categories.findByIdAndUpdate(_id, req.body)
         .then(updatedCategory => {
-            res.status(204).json({ data: updatedCategory });
+            res.status(204).json(updatedCategory);
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -60,7 +60,7 @@ router.delete('/:_id', (req, res) => {
 
     Categories.findByIdAndRemove(_id)
         .then(deletedCategory => {
-            res.status(204).json({ data: { message: `Category deleted successfully.`, deletedCategory } });
+            res.status(204).json({ message: `Category deleted successfully.`, deletedCategory });
         })
         .catch(err => {
             res.status(500).json({ error: err });
@@ -80,7 +80,7 @@ router.get('/:id/posts', (req, res) => {
     console.log(findOptions);
     Posts.find(findOptions)
         .then(docs => {
-            res.status(200).json({ data: docs });
+            res.status(200).json(docs);
         })
         .catch(err => {
             res.status(500).json({ error: err });
