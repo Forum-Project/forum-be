@@ -73,8 +73,12 @@ router.delete('/:_id', (req, res) => {
 // get post by id
 router.get('/:id/posts', (req, res) => {
     const { id } = req.params;
-
-    Posts.find({ post_category: id })
+    let tags;
+    if(req.query && req.query.tags) tags = req.query.tags.split(' ');
+    let findOptions = { post_category: id };
+    if(Array.isArray(tags)) findOptions.post_tags = { $in: tags};
+    console.log(findOptions);
+    Posts.find(findOptions)
         .then(docs => {
             res.status(200).json({ data: docs });
         })
