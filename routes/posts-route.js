@@ -6,6 +6,7 @@ const router = require('express').Router();
 
 // model imports 
 const Posts = require('../models/posts-model');
+const Comments = require('../models/comments-model')
 
 // routes 
 
@@ -28,6 +29,19 @@ router.get('/:_id', (req, res) => {
     const { _id } = req.params;
 
     Posts.findById(_id)
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            res.status(500).json({ error: err });
+        });
+});
+
+// get all comments from specific post
+router.get('/:_id/comments', (req, res) => {
+    const { _id } = req.params;
+
+    Comments.find({ post_id: _id })
         .then(docs => {
             res.status(200).json(docs);
         })
