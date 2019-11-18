@@ -43,10 +43,10 @@ router.post('/', (req, res) => {
     const post = new Posts({
         //body structure for created post
         post_title: req.body.post_title,
-        post_body: req.body.post_title,
-        post_date: req.body.post_title,
-        post_comments: req.body.post_title,
-        post_category: req.body.post_title,
+        post_body: req.body.post_body,
+        post_date: req.body.post_date,
+        post_tags: req.body.post_tags,
+        post_category: req.body.post_category,
         // // where do you come from
         user_id: req.body.user_id
     });

@@ -52,7 +52,8 @@ router.post('/', (req, res) => {
     // saving the user to the users collection
     user.save()
         .then(user => {
-            res.status(201).json(user)
+            const token = generateToken(user)
+            res.status(201).json({ message: 'User Created', token, user })
         })
         .catch(err => {
             res.status(500).json({ error: `${err}` })
