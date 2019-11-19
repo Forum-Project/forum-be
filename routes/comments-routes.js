@@ -76,9 +76,9 @@ router.put('/:_id', (req, res) => {
 
 // delete user comment
 router.delete('/:_id', (req, res) => {
-    const { id } = req.params;
+    const { _id } = req.params;
 
-    Comments.findByIdAndRemove(id)
+    Comments.findByIdAndRemove(_id)
         .then(deletedComment => {
             res.status(204).json({ message: `Comment deleted successfully.`, deletedComment });
         })
