@@ -61,7 +61,7 @@ router.post('/', (req, res) => {
 
 // update specific comment 
 router.put('/:_id', (req, res) => {
-    const { body } = req.params;
+    const { _id } = req.params;
 
     Comments.findByIdAndUpdate(_id, req.body)
         .then(updatedComment => {
