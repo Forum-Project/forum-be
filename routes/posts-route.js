@@ -82,8 +82,14 @@ router.put('/:_id', (req, res) => {
     const { _id } = req.params;
 
     Posts.findByIdAndUpdate(_id, req.body)
-        .then(updatedPost => {
-            res.status(204).json(updatedPost);
+        .then(OGPost => {
+            Posts.findById(_id)
+                .then(updatedPost => {
+                    res.status(202).json(updatedPost);
+                })
+                .catch(err => {
+                    res.status(500).json({ error: err });
+                });
         })
         .catch(err => {
             res.status(500).json({ error: err });
