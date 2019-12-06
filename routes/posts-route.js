@@ -13,6 +13,7 @@ const Comments = require('../models/comments-model')
 // ======================== GET Requests ===========================
 
 // get list of all posts (admin only)
+// get list of all posts (admin only)
 router.get('/', (req, res) => {
 
     Posts.find()
@@ -101,9 +102,10 @@ router.put('/:_id', (req, res) => {
 // delete post by id
 router.delete('/:_id', (req, res) => {
     const { _id } = req.params;
-
+    console.log('You made it to level 1 of delete', _id)
     Posts.findByIdAndRemove(_id)
         .then(deletedPost => {
+            console.log('You made it to level 2 of delete', deletedPost)
             res.status(204).json({ message: `Post deleted successfully.`, deletedPost });
         })
         .catch(err => {
